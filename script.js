@@ -184,3 +184,14 @@ renderBreeds();
 renderGroups();
 renderLast();
 show("intro");
+
+  // Card nav open/close
+  (function () {
+    var nav = document.getElementById('cardNav'), btn = document.getElementById('cnBurger'), cards = document.getElementById('cnCards');
+    function size() { nav.style.setProperty('--cn-h', (60 + cards.scrollHeight) + 'px'); }
+    function set(o) { if (o) size(); nav.classList.toggle('is-open', o); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'ปิดเมนู' : 'เปิดเมนู'); }
+    btn.addEventListener('click', function () { set(!nav.classList.contains('is-open')); });
+    cards.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+    window.addEventListener('resize', function () { if (nav.classList.contains('is-open')) size(); });
+  })();
