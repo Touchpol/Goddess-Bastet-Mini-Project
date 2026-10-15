@@ -1,0 +1,476 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Meow Haven</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Mitr:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky nav, one centred column (max 1040px); three screens swap in place: intro → test → result */
+:root {
+  --bg:#17130f; --surface:#221c17; --surface-raised:#2d251f; --line:#3d332b; --line-strong:#7d6e60;
+  --ink:#f5ede4; --ink-muted:#b3a596; --brand:#f2a65a; --brand-soft:#3a2a1b; --on-brand:#1d140c;
+  --group-thai:#f08a4b; --group-fluffy:#b48ff0; --group-active:#7fd18b; --group-unique:#6cb8f0;
+  --shadow-card:0 8px 24px rgba(0,0,0,.35); --shadow-lift:0 14px 36px rgba(0,0,0,.5);
+  --font-display:"Mitr","IBM Plex Sans Thai",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans Thai",system-ui,sans-serif;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-6:24px; --space-8:32px; --space-12:48px;
+  --radius-sm:8px; --radius-md:14px; --radius-lg:22px; --radius-pill:999px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg:#fbf6ef; --surface:#ffffff; --surface-raised:#f3eadf; --line:#e6dacb; --line-strong:#93806a;
+  --ink:#2a2019; --ink-muted:#6b5c4e; --brand:#a8520f; --brand-soft:#f8e3cc; --on-brand:#ffffff;
+  --group-thai:#c0501a; --group-fluffy:#7a4cc4; --group-active:#2c7f3e; --group-unique:#2a6aa8;
+  --shadow-card:0 8px 24px rgba(60,40,20,.10); --shadow-lift:0 14px 36px rgba(60,40,20,.18);
+  color-scheme:light; } }
+:root[data-theme="light"] {
+  --bg:#fbf6ef; --surface:#ffffff; --surface-raised:#f3eadf; --line:#e6dacb; --line-strong:#93806a;
+  --ink:#2a2019; --ink-muted:#6b5c4e; --brand:#a8520f; --brand-soft:#f8e3cc; --on-brand:#ffffff;
+  --group-thai:#c0501a; --group-fluffy:#7a4cc4; --group-active:#2c7f3e; --group-unique:#2a6aa8;
+  --shadow-card:0 8px 24px rgba(60,40,20,.10); --shadow-lift:0 14px 36px rgba(60,40,20,.18);
+  color-scheme:light;
+}
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:26px; }
+h1,h2,h3 { font-family:var(--font-display); text-wrap:balance; margin:0; }
+.wrap { max-width:1040px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); }
+
+/* Nav */
+.mh-nav { position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--surface); border-bottom:1px solid var(--line); }
+.mh-nav .wrap { display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); padding-block:var(--space-3); }
+.mh-nav__logo { font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:var(--space-2); white-space:nowrap; }
+.mh-nav__logo svg { width:26px; height:26px; fill:var(--brand); }
+.mh-nav__links { display:flex; gap:var(--space-1); list-style:none; margin:0; padding:0; }
+.mh-nav__links a { display:block; padding:var(--space-2) var(--space-3); border-radius:var(--radius-pill); font-size:14px; line-height:22px; color:var(--ink-muted); text-decoration:none; white-space:nowrap; transition:background .15s ease-out,color .15s ease-out; }
+.mh-nav__links a:hover { background:var(--surface-raised); color:var(--ink); }
+.mh-nav__links a[aria-current="page"] { background:var(--brand-soft); color:var(--brand); font-weight:500; }
+
+/* Buttons */
+.mh-btn { font:inherit; font-size:14px; line-height:20px; font-weight:500; height:44px; padding:0 var(--space-6); border-radius:var(--radius-pill); border:1px solid var(--line-strong); background:transparent; color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; gap:var(--space-2); transition:background .15s ease-out,transform .15s ease-out; }
+.mh-btn:hover { background:var(--surface-raised); }
+.mh-btn:active { transform:translateY(1px); }
+.mh-btn--primary { background:var(--brand); border-color:var(--brand); color:var(--on-brand); }
+.mh-btn--primary:hover { background:var(--brand); filter:brightness(1.08); }
+.mh-btn--lg { height:52px; padding:0 var(--space-8); font-size:16px; }
+:focus-visible { outline:2px solid var(--brand); outline-offset:3px; }
+
+.mh-chip { display:inline-flex; font-size:12px; line-height:18px; font-weight:500; padding:var(--space-1) var(--space-3); border-radius:var(--radius-pill); background:var(--brand-soft); color:var(--brand); }
+.mh-panel { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:var(--space-6); min-width:0; }
+.muted { color:var(--ink-muted); }
+
+/* Intro */
+.hero { display:grid; grid-template-columns:1.3fr 1fr; gap:var(--space-8); align-items:center; padding-block:var(--space-12); }
+.hero h1 { font-size:48px; line-height:56px; font-weight:600; margin:var(--space-3) 0; }
+.hero h1 em { font-style:normal; color:var(--brand); }
+.lede { color:var(--ink-muted); margin:0 0 var(--space-6); max-width:440px; }
+.facts { display:flex; gap:var(--space-6); margin-top:var(--space-6); font-size:14px; color:var(--ink-muted); }
+.facts b { display:block; font-family:var(--font-display); font-size:22px; line-height:32px; color:var(--ink); font-weight:500; }
+.mh-panel h2 { font-size:22px; line-height:32px; font-weight:500; margin-bottom:var(--space-1); }
+.mh-panel > p { margin:0 0 var(--space-4); font-size:14px; line-height:22px; color:var(--ink-muted); }
+.rules { margin:0; padding-left:20px; font-size:14px; line-height:24px; color:var(--ink-muted); display:grid; gap:var(--space-1); }
+
+.breeds { padding-block:0 var(--space-12); }
+.breeds h2 { font-size:32px; line-height:42px; font-weight:500; margin-bottom:var(--space-2); }
+.breeds > p { margin:0 0 var(--space-6); color:var(--ink-muted); }
+.breed-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--space-4); }
+.breed-col h3 { font-size:16px; line-height:24px; font-weight:500; display:flex; align-items:center; gap:var(--space-2); margin-bottom:var(--space-2); }
+.breed-col h3 i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.breed-col ul { list-style:none; margin:0; padding:0; font-size:14px; line-height:22px; }
+.breed-col li { padding:var(--space-1) 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:var(--space-2); }
+.breed-col li span { color:var(--ink-muted); text-align:right; }
+
+/* Test */
+.test { padding-block:var(--space-8) var(--space-12); display:flex; flex-direction:column; align-items:center; gap:var(--space-8); }
+.mh-progress { display:flex; flex-direction:column; gap:var(--space-2); width:100%; max-width:640px; }
+.mh-progress__meta { display:flex; justify-content:space-between; gap:var(--space-2); font-size:12px; line-height:18px; font-weight:500; color:var(--ink-muted); font-variant-numeric:tabular-nums; }
+.mh-progress__track { height:8px; border-radius:var(--radius-sm); background:var(--surface-raised); overflow:hidden; }
+.mh-progress__fill { height:100%; width:0; border-radius:var(--radius-sm); background:var(--brand); transition:width .25s ease-out; }
+.test h2 { font-size:22px; line-height:32px; font-weight:500; text-align:center; }
+.mh-vs { display:flex; gap:var(--space-6); align-items:center; justify-content:center; width:100%; }
+.mh-vs__or { font-family:var(--font-display); font-size:14px; color:var(--ink-muted); }
+.mh-card { all:unset; box-sizing:border-box; display:flex; flex-direction:column; width:100%; max-width:300px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); overflow:hidden; cursor:pointer; transition:transform .2s ease-out,box-shadow .2s ease-out,border-color .2s; }
+.mh-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+.mh-card:focus-visible { outline:2px solid var(--brand); outline-offset:3px; }
+.mh-card.is-chosen { animation:mh-pop .3s ease-out; border-color:var(--brand); }
+.mh-card__photo { aspect-ratio:1/1; width:100%; max-width:100%; display:block; background:var(--surface-raised); object-fit:cover; }
+.mh-card__photo svg { width:100%; height:100%; display:block; }
+.mh-card__body { padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-1); }
+.mh-card__name { font-family:var(--font-display); font-size:22px; line-height:32px; font-weight:500; }
+.mh-card__trait { font-size:14px; line-height:22px; color:var(--ink-muted); }
+.mh-card__key { align-self:flex-start; margin-top:var(--space-2); font-size:12px; line-height:18px; font-weight:500; padding:0 var(--space-2); border:1px solid var(--line-strong); border-radius:var(--radius-pill); color:var(--ink-muted); }
+@keyframes mh-pop { 0%{transform:scale(1)} 40%{transform:scale(1.04)} 100%{transform:scale(1)} }
+
+/* Result */
+.result { padding-block:var(--space-12); display:grid; grid-template-columns:1fr 1fr; gap:var(--space-8); align-items:start; }
+.result h1 { font-size:48px; line-height:56px; font-weight:600; margin:var(--space-3) 0 var(--space-3); }
+.result .desc { color:var(--ink-muted); margin:0 0 var(--space-6); max-width:460px; }
+.actions { display:flex; gap:var(--space-3); flex-wrap:wrap; }
+.scores { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
+.mh-score { display:grid; grid-template-columns:28px minmax(0,1fr) auto; align-items:center; gap:var(--space-3); padding:var(--space-2) 0; border-top:1px solid var(--line); font-size:14px; line-height:22px; font-weight:500; color:var(--ink-muted); }
+.mh-score:first-child { border-top:0; }
+.mh-score__rank { font-family:var(--font-display); font-size:16px; color:var(--ink-muted); font-variant-numeric:tabular-nums; }
+.mh-score__name { min-width:0; }
+.mh-score__value { text-align:right; font-variant-numeric:tabular-nums; }
+.mh-score__value b { font-family:var(--font-display); font-size:18px; font-weight:500; }
+.mh-score.is-winner { color:var(--ink); }
+.mh-score.is-winner .mh-score__rank { color:var(--brand); }
+.mh-score.is-winner .mh-score__name { font-weight:600; }
+.picked { grid-column:1/-1; }
+.picked h2 { font-size:22px; line-height:32px; font-weight:500; margin-bottom:var(--space-4); }
+.mini-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:var(--space-4); }
+.mini { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); overflow:hidden; }
+.mini .mh-card__photo { border-radius:0; }
+.mini div:last-child { padding:var(--space-2) var(--space-3); font-size:14px; line-height:20px; }
+.mini small { display:block; color:var(--ink-muted); font-size:12px; line-height:18px; }
+
+@media (max-width:760px) {
+  .hero, .result { grid-template-columns:1fr; }
+  .breed-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:600px) {
+  .hero h1, .result h1 { font-size:36px; line-height:44px; }
+  .mh-nav__links a { padding:var(--space-2); }
+  .mh-nav__links li.hide-sm { display:none; }
+  .mh-vs { flex-direction:column; gap:var(--space-3); }
+  .mh-card { max-width:none; flex-direction:row; }
+  .mh-card__photo { width:120px; flex:none; }
+  .mh-card__body { justify-content:center; }
+  .breed-grid { grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition:none !important; animation:none !important; } }
+</style>
+
+<nav class="mh-nav" aria-label="หลัก">
+  <div class="wrap">
+    <a class="mh-nav__logo" href="#intro" data-go="intro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 L5.5 3 L10 7.5 h4 L18.5 3 L20 11 a8 8 0 1 1 -16 0Z"/></svg>Meow Haven</a>
+    <ul class="mh-nav__links">
+      <li><a href="#intro" data-go="intro" data-nav="intro">หน้าแรก</a></li>
+      <li class="hide-sm"><a href="#breeds" data-go="breeds" data-nav="breeds">สายพันธุ์</a></li>
+      <li><a href="#test" data-go="test" data-nav="test">A/B Test</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <!-- INTRO -->
+  <section id="intro" class="screen">
+    <div class="wrap hero">
+      <div>
+        <span class="mh-chip">สำหรับคนรักแมว</span>
+        <h1>หาแมว<em>ที่ใช่</em><br>สำหรับคุณ</h1>
+        <p class="lede">เลือกแมวที่ชอบทีละคู่ ครบ 20 คู่แล้วมาดูกันว่าคุณเหมาะกับแมวกลุ่มไหนที่สุด</p>
+        <button class="mh-btn mh-btn--primary mh-btn--lg" id="startBtn" type="button">เริ่มเลย →</button>
+        <div class="facts"><span><b>40</b>สายพันธุ์</span><span><b>4</b>กลุ่ม</span><span><b>20</b>คู่</span></div>
+      </div>
+      <div class="mh-panel" id="lastPanel"></div>
+    </div>
+    <div class="wrap breeds" id="breeds">
+      <h2>แมว 4 กลุ่ม 40 สายพันธุ์</h2>
+      <p>ทุกตัวจะโผล่มาในเกมครั้งเดียว และจะเจอกับแมวต่างกลุ่มเสมอ</p>
+      <div class="breed-grid" id="breedGrid"></div>
+    </div>
+  </section>
+
+  <!-- TEST -->
+  <section id="test" class="screen" hidden>
+    <div class="wrap test">
+      <div class="mh-progress">
+        <div class="mh-progress__meta"><span id="pairLabel">คู่ที่ 1 / 20</span><span>กด A / B หรือ ← →</span></div>
+        <div class="mh-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="progTrack"><div class="mh-progress__fill" id="progFill"></div></div>
+      </div>
+      <h2>ชอบตัวไหนมากกว่า?</h2>
+      <div class="mh-vs">
+        <button class="mh-card" id="cardA" type="button"></button>
+        <span class="mh-vs__or">หรือ</span>
+        <button class="mh-card" id="cardB" type="button"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="screen" hidden>
+    <div class="wrap result">
+      <div>
+        <span class="mh-chip">ผลของคุณ</span>
+        <h1 id="winTitle"></h1>
+        <p class="desc" id="winDesc"></p>
+        <div class="actions">
+          <button class="mh-btn mh-btn--primary" id="againBtn" type="button">เล่นอีกครั้ง</button>
+          <button class="mh-btn" data-go="intro" type="button">กลับหน้าแรก</button>
+        </div>
+      </div>
+      <div class="mh-panel">
+        <h2>คะแนนแต่ละกลุ่ม</h2>
+        <p>จาก 20 ครั้งที่คุณเลือก</p>
+        <ol class="scores" id="scores"></ol>
+      </div>
+      <div class="picked">
+        <h2 id="pickedTitle">แมวที่คุณเลือกในกลุ่มนี้</h2>
+        <div class="mini-grid" id="picked"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+// [name, trait, fur, eye, ear, pattern, patternColor, longHair, eye2]
+// ear: n normal · f fold · c curl · b big · s small ; pattern: none · stripe · point · spot · patch · tux · mask
+const groups = {
+  thai: { name:"แมวไทยสายฉลาด", short:"แมวไทย", color:"--group-thai",
+    desc:"คุณชอบแมวที่ฉลาด รู้ใจ และผูกพันกับคน แมวไทยช่างคุย ติดเจ้าของ และเลี้ยงง่ายในอากาศบ้านเรา",
+    cats:[
+      ["วิเชียรมาศ","ช่างพูด ติดคน","#efe3cf","#3d7fc4","n","point","#4a3426",0],
+      ["โคราช (สีสวาด)","ขนสีเงิน แมวนำโชค","#8d96a3","#7cbf4a","n","none","",0],
+      ["ขาวมณี","ขาวทั้งตัว ตาสองสี","#f6f3ee","#3d7fc4","n","none","",0,"#d9a521"],
+      ["ศุภลักษณ์","สีทองแดง หายาก","#7a4a2c","#d9a521","n","none","",0],
+      ["โกนจา","ดำสนิท ขี้เล่น","#26211e","#e0b33a","n","none","",0],
+      ["แมวส้มไทย","อ้วนกลม กินเก่ง","#e58c3a","#c9a227","n","stripe","#b8601d",0],
+      ["แมวลายสลิด","แมวบ้านสายถึก","#9a8670","#9fb33a","n","stripe","#4e4035",0],
+      ["แมวสามสี","สวย ฉลาด เอาแต่ใจ","#f4efe6","#c9a227","n","patch","#d9822f",0],
+      ["แมวหางสั้นแม่โขง","หางสั้นงอ ซื่อสัตย์","#d8c7ae","#5ea3d6","n","point","#6b5442",0],
+      ["แมววัว (ขาวดำ)","ร่าเริง ไม่กลัวใคร","#2a2523","#d9a521","n","tux","#f4efe6",0]
+    ]},
+  fluffy: { name:"ขนยาวขี้อ้อน", short:"ขนยาว", color:"--group-fluffy",
+    desc:"คุณชอบแมวขนฟู นุ่ม ใจเย็น และชอบให้กอด เหมาะกับคนที่อยากได้เพื่อนนั่งเล่นเงียบๆ ที่บ้าน",
+    cats:[
+      ["เปอร์เซีย","หน้าแบน ใจเย็นสุดๆ","#f3ece2","#d98a2b","s","none","",1],
+      ["แร็กดอล","ตัวอ่อนปวกเปียกเวลาอุ้ม","#f0e6d6","#3d7fc4","n","point","#6d5848",1],
+      ["เมนคูน","ยักษ์ใจดี","#8a6a4c","#c9a227","b","stripe","#4d3a2a",1],
+      ["นอร์วีเจียนฟอเรสต์","ขนหนา ชอบปีนป่าย","#a39582","#7cbf4a","n","stripe","#5d5244",1],
+      ["ไซบีเรียน","ทนหนาว ขี้อ้อน","#b0a089","#c9a227","n","stripe","#6a5a48",1],
+      ["เบอร์แมน","ถุงเท้าขาว อ่อนโยน","#efe4d0","#3d7fc4","n","point","#5e4a3a",1],
+      ["หิมาลายัน","ขนฟู ตาสีฟ้า","#f2e8da","#4f9be0","s","point","#7a6050",1],
+      ["เตอร์กิชแองโกร่า","สง่างาม ตาสองสี","#faf7f2","#3d7fc4","n","none","",1,"#d9a521"],
+      ["บริติชลองแฮร์","นิ่ง สุขุม","#8e98a6","#d98a2b","s","none","",1],
+      ["บาลินีส","ช่างพูด ขนนุ่ม","#efe2cc","#3d7fc4","b","point","#4a3426",1]
+    ]},
+  active: { name:"ขนสั้นจอมซน", short:"จอมซน", color:"--group-active",
+    desc:"คุณชอบแมวขนสั้นที่ตื่นตัว อยากรู้อยากเห็น และเล่นสนุก เหมาะกับบ้านที่มีเวลาเล่นด้วยทุกวัน",
+    cats:[
+      ["อเมริกันช็อตแฮร์","เลี้ยงง่าย เป็นมิตร","#b9b3aa","#7cbf4a","n","stripe","#3f3a35",0],
+      ["เบงกอล","ลายเสือดาว ชอบน้ำ","#d9a35c","#7cbf4a","n","spot","#4a3220",0],
+      ["อะบิสซิเนียน","อยากรู้อยากเห็น","#b8743d","#c9a227","b","none","",0],
+      ["บริติชช็อตแฮร์","แก้มป่อง ชิลล์","#7f8a99","#d98a2b","s","none","",0],
+      ["รัสเซียนบลู","ขี้อาย แต่รักเจ้าของ","#6f7d8c","#5fb04a","b","none","",0],
+      ["สยาม (Siamese)","เสียงดัง ขี้อ้อน","#efe3cf","#3d7fc4","b","point","#3b2a20",0],
+      ["อียิปเชียนมาว","วิ่งเร็วที่สุด","#bfb8ab","#8fc23f","n","spot","#4a4540",0],
+      ["โอซิแคท","ลายจุด ขี้เล่นแบบหมา","#c9a37a","#c9a227","n","spot","#5a3c24",0],
+      ["เบอร์มีส","ติดคน ชอบนั่งตัก","#5a3d2b","#d9a521","n","none","",0],
+      ["ซาวันนาห์","ตัวสูง กระโดดเก่ง","#d6b07a","#9fb33a","b","spot","#2e2318",0]
+    ]},
+  unique: { name:"หน้าตาไม่ซ้ำใคร", short:"ไม่ซ้ำใคร", color:"--group-unique",
+    desc:"คุณชอบแมวที่มีเอกลักษณ์ หูพับ ขาสั้น หรือไม่มีขน เห็นครั้งเดียวก็จำได้ และพร้อมดูแลเป็นพิเศษ",
+    cats:[
+      ["สฟิงซ์","ไม่มีขน อุ่นเหมือนพีช","#e7bfa8","#7cbf4a","b","none","",0],
+      ["สก็อตติชโฟลด์","หูพับ หน้ากลม","#a7adb5","#d98a2b","f","stripe","#6d737b",0],
+      ["มันช์กิ้น","ขาสั้นน่ารัก","#d9c3a0","#c9a227","n","patch","#8a6a4c",0],
+      ["เดวอนเร็กซ์","หูใหญ่ เหมือนเอเลี่ยน","#c8b8a6","#d9a521","b","none","",0],
+      ["คอร์นิชเร็กซ์","ขนหยิก ตัวเพรียว","#e6d6c2","#c9a227","b","patch","#2b2522",0],
+      ["ปีเตอร์บอลด์","ขนน้อย ขายาว","#d7b19a","#5fb04a","b","none","",0],
+      ["อเมริกันเคิร์ล","หูม้วนไปข้างหลัง","#c79a62","#7cbf4a","c","stripe","#7a5530",0],
+      ["เจแปนนีสบ็อบเทล","หางปอม แมวกวัก","#f5f1ea","#d9a521","n","patch","#d9822f",0],
+      ["ลีคอย (แมวหมาป่า)","หน้ากากดำ ลุคหมาป่า","#8b8580","#d9a521","n","mask","#2a2624",0],
+      ["เอ็กซอติกช็อตแฮร์","หน้าแบน ขนสั้น","#d9a668","#d98a2b","s","none","",0]
+    ]}
+};
+const KEYS = Object.keys(groups);
+const PAIRS = 20;
+const $ = id => document.getElementById(id);
+
+// Draw a cat face as inline SVG (keeps theme tokens for the backdrop)
+function catSVG(c) {
+  const [, , fur, eye, ear, pat, pc, long, eye2] = c;
+  const e2 = eye2 || eye;
+  let ears = "";
+  if (ear === "f") ears = `<path d="M54 82 Q62 62 86 70 Q70 78 64 92Z M146 82 Q138 62 114 70 Q130 78 136 92Z" fill="${fur}"/>`;
+  else if (ear === "c") ears = `<path d="M60 90 L62 44 Q82 40 94 72Z M140 90 L138 44 Q118 40 106 72Z" fill="${fur}"/><path d="M62 44 Q50 52 58 62 M138 44 Q150 52 142 62" stroke="${fur}" stroke-width="6" fill="none" stroke-linecap="round"/>`;
+  else {
+    const h = ear === "b" ? 26 : ear === "s" ? 52 : 38, w = ear === "b" ? 4 : 0;
+    ears = `<path d="M${56-w} 94 L${64-w} ${h} L${98} 72Z M${144+w} 94 L${136+w} ${h} L102 72Z" fill="${fur}"/>
+            <path d="M${66-w/2} 84 L${69-w} ${h+16} L88 74Z M${134+w/2} 84 L${131+w} ${h+16} L112 74Z" fill="#e9a3a3" opacity=".55"/>`;
+  }
+  const pointEars = pat === "point" ? ears.replace(new RegExp(fur, "g"), pc) : "";
+  let mane = "";
+  if (long) for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2; mane += `<circle cx="${100 + Math.cos(a) * 56}" cy="${116 + Math.sin(a) * 50}" r="16" fill="${fur}"/>`; }
+  let marks = "";
+  if (pat === "stripe") marks = `<path d="M92 66 L95 86 M100 64 L100 88 M108 66 L105 86" stroke="${pc}" stroke-width="5" stroke-linecap="round"/><path d="M50 108 L64 112 M50 122 L64 120 M150 108 L136 112 M150 122 L136 120" stroke="${pc}" stroke-width="4" stroke-linecap="round"/>`;
+  if (pat === "point" || pat === "mask") marks = `<ellipse cx="100" cy="126" rx="${pat === "mask" ? 40 : 30}" ry="${pat === "mask" ? 34 : 26}" fill="${pc}" opacity="${pat === "mask" ? 1 : .85}"/>`;
+  if (pat === "spot") marks = [[70,90],[128,88],[60,128],[140,130],[84,74],[116,72],[100,62]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="5" fill="${pc}"/>`).join("");
+  if (pat === "patch") marks = `<path d="M100 60 Q60 58 48 104 Q58 86 98 86Z" fill="${pc}"/>`;
+  if (pat === "tux") marks = `<path d="M100 92 Q72 110 76 150 Q100 166 124 150 Q128 110 100 92Z" fill="${pc}"/>`;
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="${c[0]}">
+    <rect width="200" height="200" fill="var(--surface-raised)"/>
+    ${pointEars || ears}${mane}
+    <ellipse cx="100" cy="116" rx="56" ry="52" fill="${fur}"/>
+    ${marks}
+    <ellipse cx="80" cy="108" rx="10" ry="12" fill="${eye}"/><ellipse cx="120" cy="108" rx="10" ry="12" fill="${e2}"/>
+    <ellipse cx="80" cy="109" rx="3" ry="9" fill="#14100c"/><ellipse cx="120" cy="109" rx="3" ry="9" fill="#14100c"/>
+    <circle cx="83" cy="104" r="2.5" fill="#fff"/><circle cx="123" cy="104" r="2.5" fill="#fff"/>
+    <path d="M94 128 L106 128 L100 135Z" fill="#e9a3a3"/>
+    <path d="M100 135 Q95 142 89 140 M100 135 Q105 142 111 140" stroke="#14100c" stroke-opacity=".55" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M70 132 L40 128 M70 138 L42 142 M130 132 L160 128 M130 138 L158 142" stroke="#14100c" stroke-opacity=".3" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// Photo: try images/cats/<group>-<n>.jpg first, fall back to the SVG
+function photo(cat) {
+  const box = document.createElement("div");
+  box.className = "mh-card__photo";
+  box.innerHTML = catSVG(cat);
+  const img = new Image();
+  img.alt = cat[0];
+  img.className = "mh-card__photo";
+  img.onload = () => box.replaceWith(img);
+  img.src = `images/cats/${cat.group}-${cat.idx}.jpg`;
+  return box;
+}
+
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+let pools, scores, pair, current, picks, locked = false;
+
+function buildPools() {
+  pools = {}; scores = {}; picks = [];
+  KEYS.forEach(k => {
+    pools[k] = shuffle(groups[k].cats.map((c, i) => Object.assign([...c], { group: k, idx: i + 1 })));
+    scores[k] = 0;
+  });
+  pair = 0;
+}
+
+// Two groups with the most cats left, one cat from each → never same-group, uses all 40
+function nextPair() {
+  const order = shuffle([...KEYS]).sort((a, b) => pools[b].length - pools[a].length);
+  const p = [pools[order[0]].pop(), pools[order[1]].pop()];
+  return Math.random() < .5 ? p : [p[1], p[0]];
+}
+
+function fillCard(el, cat, key) {
+  el.className = "mh-card";
+  el.innerHTML = "";
+  el.append(photo(cat));
+  const body = document.createElement("span");
+  body.className = "mh-card__body";
+  body.innerHTML = `<span class="mh-card__name">${cat[0]}</span><span class="mh-card__trait">${cat[1]}</span><span class="mh-card__key">${key}</span>`;
+  el.append(body);
+  el.setAttribute("aria-label", `${cat[0]} — ${cat[1]}`);
+}
+
+function showPair() {
+  current = nextPair();
+  fillCard($("cardA"), current[0], "A ←");
+  fillCard($("cardB"), current[1], "B →");
+  $("pairLabel").textContent = `คู่ที่ ${pair + 1} / ${PAIRS}`;
+  $("progFill").style.width = (pair / PAIRS * 100) + "%";
+  $("progTrack").setAttribute("aria-valuenow", pair);
+  locked = false;
+}
+
+function choose(side) {
+  if (locked || $("test").hidden) return;
+  locked = true;
+  const cat = current[side];
+  scores[cat.group]++;
+  picks.push(cat);
+  pair++;
+  const el = side ? $("cardB") : $("cardA");
+  el.classList.add("is-chosen");
+  $("progFill").style.width = (pair / PAIRS * 100) + "%";
+  setTimeout(() => pair >= PAIRS ? finish() : showPair(), 320);
+}
+
+function rank(s) { return [...KEYS].sort((a, b) => s[b] - s[a]); }
+
+function finish() {
+  const order = rank(scores);
+  const top = scores[order[0]];
+  const winners = order.filter(k => scores[k] === top);
+  saveResult({ scores, winners, at: Date.now() });
+  renderResult(scores, winners, picks);
+  show("result");
+}
+
+// Ranked list, no chart: rank · group name · points (ties share a rank)
+function scoreRows(s, winners, short) {
+  let prev = null, r = 0;
+  return rank(s).map((k, i) => {
+    if (s[k] !== prev) { r = i + 1; prev = s[k]; }
+    return `<li class="mh-score${winners.includes(k) ? " is-winner" : ""}">
+      <span class="mh-score__rank">${r}</span>
+      <span class="mh-score__name">${short ? groups[k].short : groups[k].name}</span>
+      <span class="mh-score__value"><b>${s[k]}</b> คะแนน</span></li>`;
+  }).join("");
+}
+
+function renderResult(s, winners, picked) {
+  const tie = winners.length > 1;
+  $("winTitle").innerHTML = winners.map(k => `<span style="color:var(${groups[k].color})">${groups[k].name}</span>`).join(tie ? "<br>" : "");
+  $("winDesc").textContent = tie
+    ? `เสมอกัน ${winners.length} กลุ่ม คุณชอบแมวหลายแบบเท่าๆ กัน ` + groups[winners[0]].desc
+    : groups[winners[0]].desc;
+  $("scores").innerHTML = scoreRows(s, winners, false);
+  $("pickedTitle").textContent = tie ? "แมวที่คุณเลือกในกลุ่มที่ชนะ" : "แมวที่คุณเลือกในกลุ่มนี้";
+  const box = $("picked"); box.innerHTML = "";
+  picked.filter(c => winners.includes(c.group)).forEach(c => {
+    const m = document.createElement("div"); m.className = "mini";
+    m.append(photo(c));
+    const t = document.createElement("div"); t.innerHTML = `${c[0]}<small>${c[1]}</small>`;
+    m.append(t); box.append(m);
+  });
+}
+
+function saveResult(r) { try { localStorage.setItem("meowHavenLast", JSON.stringify(r)); } catch (e) {} }
+function loadResult() { try { return JSON.parse(localStorage.getItem("meowHavenLast")); } catch (e) { return null; } }
+
+function renderLast() {
+  const r = loadResult();
+  const p = $("lastPanel");
+  if (r && r.scores && r.winners) {
+    p.innerHTML = `<h2>ผลครั้งก่อน</h2><p>คุณชอบแมว ${r.winners.map(k => `<b style="color:var(${groups[k].color})">${groups[k].name}</b>`).join(" และ ")} มากที่สุด</p>
+      <ol class="scores">${scoreRows(r.scores, r.winners, true)}</ol>`;
+  } else {
+    p.innerHTML = `<h2>เล่นยังไง</h2><p>ใช้เวลาประมาณ 1 นาที</p>
+      <ol class="rules"><li>แมวจะขึ้นมาทีละคู่ เลือกตัวที่ชอบมากกว่า</li><li>คลิกการ์ด หรือกด A / B หรือ ← →</li><li>ครบ 20 คู่ ระบบจะบอกว่าคุณชอบแมวกลุ่มไหน</li></ol>`;
+  }
+}
+
+function renderBreeds() {
+  $("breedGrid").innerHTML = KEYS.map(k => `<div class="breed-col"><h3><i style="background:var(${groups[k].color})"></i>${groups[k].name}</h3>
+    <ul>${groups[k].cats.map(c => `<li>${c[0]}<span>${c[1]}</span></li>`).join("")}</ul></div>`).join("");
+}
+
+function show(id) {
+  ["intro", "test", "result"].forEach(s => $(s).hidden = s !== id);
+  document.querySelectorAll("[data-nav]").forEach(a => a.toggleAttribute("aria-current", false));
+  const nav = document.querySelector(`[data-nav="${id === "result" ? "test" : id}"]`);
+  if (nav) nav.setAttribute("aria-current", "page");
+  window.scrollTo(0, 0);
+}
+
+function start() { buildPools(); showPair(); show("test"); }
+
+document.addEventListener("click", e => {
+  const go = e.target.closest("[data-go]");
+  if (!go) return;
+  e.preventDefault();
+  const t = go.dataset.go;
+  if (t === "test") start();
+  else if (t === "breeds") { renderLast(); show("intro"); document.querySelector('[data-nav="breeds"]').setAttribute("aria-current", "page"); document.querySelector('[data-nav="intro"]').removeAttribute("aria-current"); $("breeds").scrollIntoView(); }
+  else { renderLast(); show("intro"); }
+});
+$("startBtn").addEventListener("click", start);
+$("againBtn").addEventListener("click", start);
+$("cardA").addEventListener("click", () => choose(0));
+$("cardB").addEventListener("click", () => choose(1));
+document.addEventListener("keydown", e => {
+  if (e.target.closest && e.target.closest("input,textarea")) return;
+  const k = e.key.toLowerCase();
+  if (k === "a" || k === "arrowleft") choose(0);
+  if (k === "b" || k === "arrowright") choose(1);
+});
+
+renderBreeds();
+renderLast();
+show("intro");
+</script>
+
+</body></html>
