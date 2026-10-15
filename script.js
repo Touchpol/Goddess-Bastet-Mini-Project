@@ -14,6 +14,10 @@ function photo(cat) {
   return img;
 }
 
+
+
+
+
 function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } return array; }
 
 let pools, scores, pair, current, picks, locked = false;
@@ -108,7 +112,20 @@ function renderResult(groupScores, winners, picked) {
   $("pickedTitle").textContent = tie ? "แมวที่คุณเลือกในกลุ่มที่ชนะ" : "แมวที่คุณเลือกในกลุ่มนี้";
   const box = $("picked"); box.innerHTML = "";
   picked.filter(cat => winners.includes(cat.group)).forEach(cat => {
-    const mini = document.createElement("div"); mini.className = "mini";
+    const mini = document.createElement("div"); mini.className = "mini";  // Script สำหรับสลับ Theme Light / Dark
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+
+    themeToggleBtn?.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeIcon.textContent = '☀️';
+      }
+    });
     mini.append(photo(cat));
     const text = document.createElement("div"); text.innerHTML = `${cat[0]}<small>${cat[1]}</small>`;
     mini.append(text); box.append(mini);
@@ -185,13 +202,28 @@ renderGroups();
 renderLast();
 show("intro");
 
-  // Card nav open/close
-  (function () {
-    var nav = document.getElementById('cardNav'), btn = document.getElementById('cnBurger'), cards = document.getElementById('cnCards');
-    function size() { nav.style.setProperty('--cn-h', (60 + cards.scrollHeight) + 'px'); }
-    function set(o) { if (o) size(); nav.classList.toggle('is-open', o); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'ปิดเมนู' : 'เปิดเมนู'); }
-    btn.addEventListener('click', function () { set(!nav.classList.contains('is-open')); });
-    cards.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
-    window.addEventListener('resize', function () { if (nav.classList.contains('is-open')) size(); });
-  })();
+// Theme toggle (light / dark). With no explicit choice yet, start from the system preference so the first click always flips what's on screen
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const themeIcon = document.getElementById('themeIcon');
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+}
+themeToggleBtn?.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme')
+    || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(current === 'light' ? 'dark' : 'light'); // not set them defult is dark . 
+});
+applyTheme(matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+// Card nav open/close
+(function () {
+  var nav = document.getElementById('cardNav'), btn = document.getElementById('cnBurger'), cards = document.getElementById('cnCards');
+  function size() { nav.style.setProperty('--cn-h', (60 + cards.scrollHeight) + 'px'); }
+  function set(o) { if (o) size(); nav.classList.toggle('is-open', o); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'ปิดเมนู' : 'เปิดเมนู'); }
+  btn.addEventListener('click', function () { set(!nav.classList.contains('is-open')); });
+  cards.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+  window.addEventListener('resize', function () { if (nav.classList.contains('is-open')) size(); });
+})();
+

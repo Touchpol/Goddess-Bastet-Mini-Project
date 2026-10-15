@@ -9,8 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Mitr:wght@400;500;600&display=swap">
-  
-  <link rel="stylesheet" href="styles.css">
+  <link href="./styles.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -234,22 +233,6 @@
   </div>
 </footer>
 
-<script>
-  // Script สำหรับสลับ Theme Light / Dark
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
-  const themeIcon = document.getElementById('themeIcon');
-  
-  themeToggleBtn?.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    if (currentTheme === 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      themeIcon.textContent = '🌙';
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      themeIcon.textContent = '☀️';
-    }
-  });
-</script>
 <script src="groups.js"></script>
 <script src="script.js"></script>
 </body>
