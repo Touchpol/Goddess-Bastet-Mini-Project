@@ -28,6 +28,7 @@ function buildPools() {
   KEYS.forEach(key => {
     pools[key] = shuffle(groups[key].cats.map((cat, index) => Object.assign([...cat], { group: key, idx: index + 1 })));
     scores[key] = 0;
+    
   });
   pair = 0;
 }
@@ -68,6 +69,7 @@ function choose(side) {
   locked = true;
   const cat = current[side];
   scores[cat.group]++;
+  console.log(`Pair ${pair + 1}: ${cat[0]} (${cat.group}) chosen, score = ${scores[cat.group]}`);
   picks.push(cat);
   pair++;
   const el = side ? $("cardB") : $("cardA");
@@ -84,6 +86,7 @@ function finish() {
   const order = rank(scores);
   const top = scores[order[0]];
   const winners = order.filter(key => scores[key] === top);
+
   saveResult({ scores, winners, at: Date.now() });
   renderResult(scores, winners, picks);
   show("result");
@@ -132,10 +135,23 @@ function renderResult(groupScores, winners, picked) {
   });
 }
 
-// Store the last result in localStorage (silently ignored if storage is unavailable)
-function saveResult(result) { try { localStorage.setItem("meowHavenLast", JSON.stringify(result)); } catch (error) { } }
-// Read the last saved result from localStorage, or null if missing or unreadable
-function loadResult() { try { return JSON.parse(localStorage.getItem("meowHavenLast")); } catch (error) { return null; } }
+// Store the last result in localStorage, plus a cookie backup (each silently ignored if unavailable)
+function saveResult(result) {
+  const json = JSON.stringify(result);
+  try { localStorage.setItem("meowHavenLast", json); } catch (error) { }
+  // Backup copy in a cookie (1 year) in case localStorage is cleared or unavailable
+  try { document.cookie = `meowHavenLast=${encodeURIComponent(json)}; max-age=31536000; path=/; SameSite=Lax`; } catch (error) { }
+}
+// Read the backup cookie, or null if absent
+function readCookie() {
+  const match = document.cookie.split("; ").find(part => part.startsWith("meowHavenLast="));
+  return match ? JSON.parse(decodeURIComponent(match.slice("meowHavenLast=".length))) : null;
+}
+// Read the last saved result from localStorage, falling back to the cookie; null if neither is readable
+function loadResult() {
+  try { const stored = JSON.parse(localStorage.getItem("meowHavenLast")); if (stored) return stored; } catch (error) { }
+  try { return readCookie(); } catch (error) { return null; }
+}
 
 // Intro panel: show the previous result if there is one, otherwise the how-to-play instructions
 function renderLast() {
