@@ -139,6 +139,14 @@ function renderBreeds() {
     <ul>${groups[key].cats.map(cat => `<li>${cat[0]}<span>${cat[1]}</span></li>`).join("")}</ul></div>`).join("");
 }
 
+// Build the four group cards: cover photo (first cat), name and the group's description
+function renderGroups() {
+  $("groupGrid").innerHTML = KEYS.map(key => `<article class="group-card">
+    <img src="images/cats/${key}-1.jpg" alt="">
+    <div><h3><i style="background:var(${groups[key].color})"></i>${groups[key].name}</h3><p>${groups[key].desc}</p></div>
+  </article>`).join("");
+}
+
 // Show one screen (intro / test / result), hide the others, update the nav highlight and scroll to top
 function show(id) {
   ["intro", "test", "result"].forEach(section => $(section).hidden = section !== id);
@@ -175,5 +183,6 @@ document.addEventListener("keydown", event => {
 
 // Initial page setup
 renderBreeds();
+renderGroups();
 renderLast();
 show("intro");
