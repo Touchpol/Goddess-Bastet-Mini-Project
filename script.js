@@ -139,27 +139,33 @@ function renderBreeds() {
     <ul>${groups[key].cats.map(cat => `<li>${cat[0]}<span>${cat[1]}</span></li>`).join("")}</ul></div>`).join("");
 }
 
-// Show one screen (intro / test / result), hide the others, update the nav highlight and scroll to top
+// Build the four group cards: cover photo (first cat), name and the group's description
+function renderGroups() {
+  $("groupGrid").innerHTML = KEYS.map(key => `<article class="group-card">
+    <img src="images/cats/${key}-1.jpg" alt="">
+    <div><h3><i style="background:var(${groups[key].color})"></i>${groups[key].name}</h3><p>${groups[key].desc}</p></div>
+  </article>`).join("");
+}
+
+// Show one screen (intro / test / result), hide the others, scroll to top
 function show(id) {
   ["intro", "test", "result"].forEach(section => $(section).hidden = section !== id);
-  document.querySelectorAll("[data-nav]").forEach(a => a.toggleAttribute("aria-current", false));
-  const nav = document.querySelector(`[data-nav="${id === "result" ? "test" : id}"]`);
-  if (nav) nav.setAttribute("aria-current", "page");
   window.scrollTo(0, 0);
 }
 
 // Begin a new test: reset the pools and show the first pair
 function start() { buildPools(); showPair(); show("test"); }
 
-// Delegated click handler for [data-go] links: start the test, or return to the intro (jumping to the breeds section)
+// Delegated click handler for [data-go] links: start the test, or return to the intro (jumping to the link's #section if it has one)
 document.addEventListener("click", event => {
   const go = event.target.closest("[data-go]");
   if (!go) return;
   event.preventDefault();
-  const t = go.dataset.go;
-  if (t === "test") start();
-  else if (t === "breeds") { renderLast(); show("intro"); document.querySelector('[data-nav="breeds"]').setAttribute("aria-current", "page"); document.querySelector('[data-nav="intro"]').removeAttribute("aria-current"); $("breeds").scrollIntoView(); }
-  else { renderLast(); show("intro"); }
+  if (go.dataset.go === "test") return start();
+  renderLast();
+  show("intro");
+  const target = go.hash && document.querySelector(go.hash);
+  if (target && go.hash !== "#intro") target.scrollIntoView();
 });
 $("startBtn").addEventListener("click", start);
 $("againBtn").addEventListener("click", start);
@@ -175,5 +181,17 @@ document.addEventListener("keydown", event => {
 
 // Initial page setup
 renderBreeds();
+renderGroups();
 renderLast();
 show("intro");
+
+  // Card nav open/close
+  (function () {
+    var nav = document.getElementById('cardNav'), btn = document.getElementById('cnBurger'), cards = document.getElementById('cnCards');
+    function size() { nav.style.setProperty('--cn-h', (60 + cards.scrollHeight) + 'px'); }
+    function set(o) { if (o) size(); nav.classList.toggle('is-open', o); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'ปิดเมนู' : 'เปิดเมนู'); }
+    btn.addEventListener('click', function () { set(!nav.classList.contains('is-open')); });
+    cards.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+    window.addEventListener('resize', function () { if (nav.classList.contains('is-open')) size(); });
+  })();
