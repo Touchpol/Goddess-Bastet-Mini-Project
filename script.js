@@ -14,8 +14,7 @@ function photo(cat) {
   return img;
 }
 
-// Fisher-Yates shuffle: randomises the array in place and returns it
-function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
+function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } return array; }
 
 let pools, scores, pair, current, picks, locked = false;
 
@@ -100,7 +99,7 @@ function scoreRows(groupScores, winners, useShort) {
 
 // Fill the result screen: winning group name(s) and description, score list, and the cats the user picked from the winning group(s)
 function renderResult(groupScores, winners, picked) {
-  const tie = winners.length > 1;groups
+  const tie = winners.length > 1; groups
   $("winTitle").innerHTML = winners.map(key => `<span style="color:var(${groups[key].color})">${groups[key].name}</span>`).join(tie ? "<br>" : "");
   $("winDesc").textContent = tie
     ? `เสมอกัน ${winners.length} กลุ่ม คุณชอบแมวหลายแบบเท่าๆ กัน ` + groups[winners[0]].desc
@@ -117,7 +116,7 @@ function renderResult(groupScores, winners, picked) {
 }
 
 // Store the last result in localStorage (silently ignored if storage is unavailable)
-function saveResult(result) { try { localStorage.setItem("meowHavenLast", JSON.stringify(result)); } catch (error) {} }
+function saveResult(result) { try { localStorage.setItem("meowHavenLast", JSON.stringify(result)); } catch (error) { } }
 // Read the last saved result from localStorage, or null if missing or unreadable
 function loadResult() { try { return JSON.parse(localStorage.getItem("meowHavenLast")); } catch (error) { return null; } }
 
