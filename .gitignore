@@ -1,0 +1,30 @@
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.mcp.json
+
+# logs
+*.log
+logs/
+
+# editor/config
+.vscode/
+.idea/
+.env
+.env.*
+.DS_Store
+
+# cache
+.cache/
+*.cache
+__pycache__/
+*.pyc
+node_modules/
+.parcel-cache/
+.eslintcache
+
+# config
+.config/
+config/
+*.config
+*~
