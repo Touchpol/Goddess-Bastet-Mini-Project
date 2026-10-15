@@ -1,5 +1,7 @@
 const KEYS = Object.keys(groups);
 const PAIRS = 20;
+// groups.js stores cats as objects; the code below reads them as [name, trait, fur, eye, ear, pattern, patternColor, longHair, eye2]
+KEYS.forEach(k => { groups[k].cats = groups[k].cats.map(c => Array.isArray(c) ? c : [c.name, c.trait, c.fur, c.eye, c.ear, c.pattern, c.patternColor, c.longHair, c.eye2]); });
 const $ = id => document.getElementById(id);
 
 // Draw a cat face as inline SVG (keeps theme tokens for the backdrop)
@@ -7,7 +9,10 @@ function catSVG(c) {
   const [, , fur, eye, ear, pat, pc, long, eye2] = c;
   const e2 = eye2 || eye;
   let ears = "";
-  if (ear === "f") ears = `<path d="M54 82 Q62 62 86 70 Q70 78 64 92Z M146 82 Q138 62 114 70 Q130 78 136 92Z" fill="${fur}"/>`;
+  // original curved ears (disabled for test)
+  // if (ear === "f") ears = `<path d="M54 82 Q62 62 86 70 Q70 78 64 92Z M146 82 Q138 62 114 70 Q130 78 136 92Z" fill="${fur}"/>`;
+  // simple circle ears (test)
+  if (ear === "f") ears = `<circle cx="66" cy="76" r="14" fill="${fur}"/><circle cx="134" cy="76" r="14" fill="${fur}"/>`;
   else if (ear === "c") ears = `<path d="M60 90 L62 44 Q82 40 94 72Z M140 90 L138 44 Q118 40 106 72Z" fill="${fur}"/><path d="M62 44 Q50 52 58 62 M138 44 Q150 52 142 62" stroke="${fur}" stroke-width="6" fill="none" stroke-linecap="round"/>`;
   else {
     const h = ear === "b" ? 26 : ear === "s" ? 52 : 38, w = ear === "b" ? 4 : 0;
@@ -18,11 +23,19 @@ function catSVG(c) {
   let mane = "";
   if (long) for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2; mane += `<circle cx="${100 + Math.cos(a) * 56}" cy="${116 + Math.sin(a) * 50}" r="16" fill="${fur}"/>`; }
   let marks = "";
+  // Coat markings, drawn over the head; pc = pattern colour. Each pattern replaces `marks`.
+  // stripe: three forehead stripes + two cheek stripes on each side (tabby)
   if (pat === "stripe") marks = `<path d="M92 66 L95 86 M100 64 L100 88 M108 66 L105 86" stroke="${pc}" stroke-width="5" stroke-linecap="round"/><path d="M50 108 L64 112 M50 122 L64 120 M150 108 L136 112 M150 122 L136 120" stroke="${pc}" stroke-width="4" stroke-linecap="round"/>`;
+  // point/mask: darker muzzle ellipse; mask is larger and fully opaque, point is smaller and slightly translucent (ears are also recoloured via pointEars)
   if (pat === "point" || pat === "mask") marks = `<ellipse cx="100" cy="126" rx="${pat === "mask" ? 40 : 30}" ry="${pat === "mask" ? 34 : 26}" fill="${pc}" opacity="${pat === "mask" ? 1 : .85}"/>`;
+  // spot: seven small dots at fixed [x, y] positions scattered over the face
   if (pat === "spot") marks = [[70,90],[128,88],[60,128],[140,130],[84,74],[116,72],[100,62]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="5" fill="${pc}"/>`).join("");
+  // patch: one colour patch over the left eye / top-left of the head
   if (pat === "patch") marks = `<path d="M100 60 Q60 58 48 104 Q58 86 98 86Z" fill="${pc}"/>`;
+  // tux: tuxedo bib, a teardrop shape down the chin and chest
   if (pat === "tux") marks = `<path d="M100 92 Q72 110 76 150 Q100 166 124 150 Q128 110 100 92Z" fill="${pc}"/>`;
+  // Layers are painted bottom to top: backdrop, ears, mane, head, markings, eyes (iris, pupil, glint), nose, mouth, whiskers.
+  // The aria-label is the cat's name (c[0]). Eyes use `eye` (left) and `e2` (right) so odd-eyed cats work.
   return `<svg viewBox="0 0 200 200" role="img" aria-label="${c[0]}">
     <rect width="200" height="200" fill="var(--surface-raised)"/>
     ${pointEars || ears}${mane}
@@ -50,7 +63,7 @@ function photo(cat) {
   return box;
 }
 
-function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
 
 let pools, scores, pair, current, picks, locked = false;
 
@@ -185,8 +198,8 @@ document.addEventListener("click", e => {
 });
 $("startBtn").addEventListener("click", start);
 $("againBtn").addEventListener("click", start);
-$("cardA").addEventLgroupsistener("click", () => choose(0));
-$("cardB").addEventListener("click", () => choose(1));groups
+$("cardA").addEventListener("click", () => choose(0));
+$("cardB").addEventListener("click", () => choose(1));
 document.addEventListener("keydown", e => {
   if (e.target.closest && e.target.closest("input,textarea")) return;
   const k = e.key.toLowerCase();
