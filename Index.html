@@ -9,36 +9,37 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Mitr:wght@400;500;600&display=swap">
-  <link href="./styles.css?v=2" rel="stylesheet"/>
+  <link href="./styles.css?v=3" rel="stylesheet"/>
 </head>
 <body>
 
 <div class="cn-wrap">
-  <nav class="cn" id="cardNav" aria-label="หลัก">
+  <nav class="cn" id="cardNav" data-i18n-aria-label="nav.aria">
     <div class="cn__top">
-      <button class="cn__burger" id="cnBurger" type="button" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="cnCards"><span></span><span></span></button>
+      <button class="cn__burger" id="cnBurger" type="button" data-i18n-aria-label="nav.openMenu" aria-expanded="false" aria-controls="cnCards"><span></span><span></span></button>
       <a class="cn__logo" href="#intro" data-go="intro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 L5.5 3 L10 7.5 h4 L18.5 3 L20 11 a8 8 0 1 1 -16 0Z" /></svg>Meow Haven</a>
       <div class="cn__right">
-        <button type="button" class="theme-toggle" id="themeToggleBtn" aria-label="สลับธีม"><span id="themeIcon">🌙</span></button>
-        <a class="mh-btn mh-btn--primary cn__cta" href="#test" data-go="test">เริ่มเล่น</a>
+        <button type="button" class="theme-toggle" id="langToggleBtn">EN</button>
+        <button type="button" class="theme-toggle" id="themeToggleBtn" data-i18n-aria-label="nav.toggleTheme"><span id="themeIcon">🌙</span></button>
+        <a class="mh-btn mh-btn--primary cn__cta" href="#test" data-go="test" data-i18n="nav.play">เริ่มเล่น</a>
       </div>
     </div>
     <div class="cn__cards" id="cnCards">
       <div class="cn__card" style="--c:var(--brand-soft)">
-        <h3>สำรวจ</h3>
-        <a href="#about" data-go="intro">↗ สายมูแมว</a>
-        <a href="#how" data-go="intro">↗ เล่นยังไง</a>
-        <a href="about.html">↗ เกี่ยวกับโปรเจกต์</a>
+        <h3 data-i18n="nav.explore">สำรวจ</h3>
+        <a href="#types" data-go="intro" data-i18n="nav.exploreTypes">↗ ประเภทของแมว</a>
+        <a href="#how" data-go="intro" data-i18n="nav.exploreHow">↗ เล่นยังไง</a>
+        <a href="about.html" data-i18n="nav.exploreAbout">↗ เกี่ยวกับโปรเจกต์</a>
       </div>
       <div class="cn__card" style="--c:var(--surface-raised)">
-        <h3>กลุ่มแมว</h3>
-        <a href="#groups" data-go="intro">↗ 4 กลุ่มแมว</a>
-        <a href="#breeds" data-go="intro">↗ 40 สายพันธุ์</a>
+        <h3 data-i18n="nav.groups">กลุ่มแมว</h3>
+        <a href="#groups" data-go="intro" data-i18n="nav.groups4">↗ 4 กลุ่มแมว</a>
+        <a href="#breeds" data-go="intro" data-i18n="nav.breeds40">↗ 40 สายพันธุ์</a>
       </div>
       <div class="cn__card" style="--c:var(--surface)">
-        <h3>เล่นเลย</h3>
-        <a href="#test" data-go="test">↗ A/B Test</a>
-        <a href="#about" data-go="intro">↗ ตำนาน Bastet</a>
+        <h3 data-i18n="nav.playNow">เล่นเลย</h3>
+        <a href="#test" data-go="test" data-i18n="nav.playAB">↗ A/B Test</a>
+        <a href="#bastet" data-go="intro" data-i18n="nav.groupsBastet">↗ ตำนาน Bastet</a>
       </div>
     </div>
   </nav>
@@ -49,53 +50,70 @@
   <section id="intro" class="screen">
     <div class="wrap hero">
       <div>
-        <span class="mh-chip">สำหรับคนรักแมว</span>
-        <h1>หาแมว<em>ที่ใช่</em><br>สำหรับคุณ</h1>
-        <p class="lede">เลือกแมวที่ชอบทีละคู่ ครบ 20 คู่แล้วมาดูกันว่าคุณเหมาะกับแมวกลุ่มไหนที่สุด</p>
+        <span class="mh-chip" data-i18n="hero.chip">สำหรับคนรักแมว</span>
+        <h1 data-i18n-html="hero.title">หาแมว<em>ที่ใช่</em><br>สำหรับคุณ</h1>
+        <p class="lede" data-i18n="hero.lede">เลือกแมวที่ชอบทีละคู่ ครบ 20 คู่แล้วมาดูกันว่าคุณเหมาะกับแมวกลุ่มไหนที่สุด</p>
         <div class="hero__cta">
-          <button class="mh-btn mh-btn--primary mh-btn--lg" id="startBtn" type="button">เริ่มเลย →</button>
-          <a class="mh-btn mh-btn--lg" href="#how">เล่นยังไง</a>
+          <button class="mh-btn mh-btn--primary mh-btn--lg" id="startBtn" type="button" data-i18n="hero.start">เริ่มเลย →</button>
+          <a class="mh-btn mh-btn--lg" href="#how" data-i18n="hero.howto">เล่นยังไง</a>
         </div>
-        <div class="facts"><span><b>40</b>สายพันธุ์</span><span><b>4</b>กลุ่ม</span><span><b>20</b>คู่</span></div>
+        <div class="facts"><span><b>40</b><span data-i18n="hero.facts.breeds">สายพันธุ์</span></span><span><b>4</b><span data-i18n="hero.facts.groups">กลุ่ม</span></span><span><b>20</b><span data-i18n="hero.facts.pairs">คู่</span></span></div>
       </div>
       <div class="mh-panel" id="lastPanel"></div>
     </div>
 
-    <!-- ABOUT -->
-    <section class="sec" id="about">
+    <!-- TYPES OF CATS -->
+    <section class="sec" id="types">
       <div class="wrap">
-        <span class="mh-chip">🐱 สายมูแมว</span>
-        <h2>จากเทพีอียิปต์ ถึงแมวมงคลสยาม</h2>
-        <p>ทำไมมนุษย์ถึงยกแมวให้เป็น “ผู้คุ้มครองบ้าน” มาตั้งแต่โบราณ</p>
+        <span class="mh-chip" data-i18n="types.chip">🐾 รู้จักแมว</span>
+        <h2 data-i18n="types.title">ประเภทของแมว</h2>
+        <p data-i18n="types.lede">แมวแบ่งได้หลายมุมมอง ทั้งทางชีววิทยา สายพันธุ์แมวบ้าน สายพันธุ์ไทยโบราณ และความยาวของขน</p>
 
-        <h3 class="sub">ต้นตำรับ: บาสเต็ต เทพีแมวแห่งอียิปต์</h3>
-        <p class="story">บาสเต็ตเป็นเทพีของอียิปต์โบราณ ซึ่งอาจมีต้นกำเนิดจากนูเบีย และมีผู้บูชามาตั้งแต่ราชวงศ์ที่ 2
-          (ราว 2890 ปีก่อนคริสตกาล) หรือเกือบ 5,000 ปีที่แล้ว</p>
+        <h3 class="sub" data-i18n="types.sub1">การจำแนกทางชีววิทยา (วงศ์ Felidae)</h3>
+        <p class="story" data-i18n="types.story1">วงศ์แมวมีประมาณ 40 สายพันธุ์ แบ่งออกเป็น 2 วงศ์ย่อยหลัก</p>
         <ul class="facts-grid">
-          <li><b>จากสิงโตสู่แมว</b><span>เดิมเธอเป็นเทพีสิงโตสายนักรบแห่งดวงอาทิตย์
-              ก่อนจะกลายเป็นเทพีแมวอย่างที่รู้จักกันในปัจจุบัน</span></li>
-          <li><b>พลังคุ้มครอง</b><span>นับถือกันว่าเป็นเทพีผู้ปกป้องจากโรคติดต่อและวิญญาณชั่วร้าย
-              และเป็นเทพีแห่งการตั้งครรภ์และการคลอดบุตร อาจเพราะแมวบ้านขยายพันธุ์เก่ง</span></li>
-          <li><b>แมว = ของสูง</b><span>แมวหลวงบางตัวได้สวมเครื่องประดับทองคำ และได้กินอาหารจานเดียวกับคนในบ้าน</span></li>
-          <li><b>สายมูตัวจริง</b><span>เมื่อขุดค้นวิหารของบาสเต็ต พบมัมมี่แมวมากกว่า 300,000 ตัว และถ้าแมวตาย
-              ทั้งครอบครัวจะไว้ทุกข์อย่างหนัก</span></li>
-          <li><b>เทศกาลใหญ่</b><span>เทศกาลของเทพีองค์นี้มีผู้มาร่วมราว 700,000 คนในแต่ละปี มีทั้งร้อง เต้น
-              ดื่มไวน์กันเต็มที่</span></li>
+          <li><b data-i18n="types.big1.b">สิงโต</b><span data-i18n="types.big1.s">อยู่รวมกันเป็นฝูง ตัวผู้มีขนสร้อยคอ พบในแอฟริกาและอินเดีย</span></li>
+          <li><b data-i18n="types.big2.b">เสือโคร่ง</b><span data-i18n="types.big2.s">แมวตระกูลใหญ่ที่สุด มีลายทาง ว่ายน้ำเก่ง</span></li>
+          <li><b data-i18n="types.big3.b">เสือดาว</b><span data-i18n="types.big3.s">ปรับตัวเก่ง ลากเหยื่อขึ้นต้นไม้ เสือดำคือเสือดาวที่มีเมลานิน</span></li>
+          <li><b data-i18n="types.big4.b">เสือจากัวร์</b><span data-i18n="types.big4.s">กัดแรงมาก อาศัยในอเมริกากลางและใต้</span></li>
+          <li><b data-i18n="types.big5.b">เสือดาวหิมะ</b><span data-i18n="types.big5.s">อาศัยบนที่สูง หางยาวหนา ไม่สามารถคำรามได้</span></li>
+          <li><b data-i18n="types.big6.b">เสือลายเมฆ</b><span data-i18n="types.big6.s">ลายคล้ายเมฆ เขี้ยวยาวเมื่อเทียบกับตัว พบในไทย</span></li>
+        </ul>
+        <p class="story" data-i18n-html="types.smallcats"><b>แมวเล็ก (Felinae):</b> ตัวอย่างเช่น เสือชีตาห์ (สัตว์บกที่วิ่งเร็วที่สุด) พูม่า ลิงซ์ แมวดาว แมวหัวแบน แมวทองเอเชีย และแมวบ้าน (Felis catus) ซึ่งถูกเลี้ยงมาแล้วราว 9,000–10,000 ปี ส่วนใหญ่คำรามไม่ได้ แต่ร้องครางได้</p>
+
+        <h3 class="sub" data-i18n="types.sub2">สายพันธุ์แมวบ้านที่นิยม</h3>
+        <p class="story" data-i18n="types.story2">จำนวนสายพันธุ์ที่ได้รับการรับรองขึ้นอยู่กับสมาคม เช่น CFA รับรองประมาณ 45 สายพันธุ์ ส่วน TICA รับรองมากกว่า 70 สายพันธุ์</p>
+        <ul class="facts-grid">
+          <li><b data-i18n="types.breed1.b">เปอร์เซีย</b><span data-i18n="types.breed1.s">ขนยาว ใจเย็นและขี้อ้อน หน้าแบน มักมีปัญหาการหายใจและขี้ตาไหล ต้องแปรงขนทุกวัน</span></li>
+          <li><b data-i18n="types.breed2.b">เอ็กซอติกช็อตแฮร์</b><span data-i18n="types.breed2.s">ขนสั้นหนา ใจเย็น หน้าแบบเปอร์เซียแต่ดูแลง่ายกว่า</span></li>
+          <li><b data-i18n="types.breed3.b">บริติชช็อตแฮร์</b><span data-i18n="types.breed3.s">ขนสั้นหนา สบายๆ เป็นตัวของตัวเอง ไม่ชอบถูกจับบ่อย อ้วนง่าย</span></li>
+          <li><b data-i18n="types.breed4.b">สก็อตติชโฟลด์</b><span data-i18n="types.breed4.s">ขนสั้นหรือยาว อ่อนโยน หูพับจากยีนที่มีผลต่อกระดูกอ่อน เสี่ยงปัญหาข้อ</span></li>
+          <li><b data-i18n="types.breed5.b">เมนคูน</b><span data-i18n="types.breed5.s">ขนยาว เป็นมิตร ฉลาด ตัวใหญ่มาก เสี่ยงโรคหัวใจ (HCM)</span></li>
+          <li><b data-i18n="types.breed6.b">แร็กดอล</b><span data-i18n="types.breed6.s">ขนกึ่งยาว ตัวอ่อนปวกเปียกเวลาอุ้ม ติดคน ตาสีฟ้า เข้ากับเด็กได้ดี</span></li>
+          <li><b data-i18n="types.breed7.b">เบงกอล</b><span data-i18n="types.breed7.s">ขนสั้น พลังเยอะ ขี้เล่น ลายคล้ายเสือป่า ต้องการกิจกรรมมาก</span></li>
+          <li><b data-i18n="types.breed8.b">สฟิงซ์</b><span data-i18n="types.breed8.s">ไม่มีขน ขี้อ้อนมาก ต้องอาบน้ำบ่อยเพื่อลดความมันผิว ไวต่อความเย็นและแดด</span></li>
+          <li><b data-i18n="types.breed9.b">อเมริกันช็อตแฮร์</b><span data-i18n="types.breed9.s">ขนสั้น ปรับตัวง่าย แข็งแรง เลี้ยงง่าย</span></li>
         </ul>
 
-        <h3 class="sub">มาถึงสยาม: แมวไทยก็มีของ</h3>
-        <p class="story">แม้ไม่มีหลักฐานว่าลัทธิบาสเต็ตส่งต่อมาถึงไทยโดยตรง แต่ความเชื่อว่า “แมวคือผู้พิทักษ์ ผู้นำโชค”
-          มีอยู่ในบ้านเราเช่นกัน</p>
+        <h3 class="sub" data-i18n="types.sub3">แมวไทย</h3>
+        <p class="story" data-i18n="types.story3">ตำราแมวไทยโบราณบรรยายแมวมงคลไว้หลายแบบ (ส่วนใหญ่อ้างว่ามีประมาณ 17 ชนิด) ที่รู้จักและพบในปัจจุบันมีดังนี้</p>
         <ul class="facts-grid">
-          <li><b>ตำราแมวไทย</b><span>ในสมุดข่อยโบราณ แยกแมวมงคล เช่น วิเชียรมาศ ศุภลักษณ์ โกนจา
-              ว่าตัวไหนเลี้ยงแล้วรวย</span></li>
-          <li><b>แห่นางแมว</b><span>อุ้มแมวแห่ไปขอฝนให้พืชผล</span></li>
-          <li><b>อุ้มแมวขึ้นบ้านใหม่</b><span>ความเชื่อว่าแมวช่วยเสริมความร่มเย็นให้บ้าน</span></li>
+          <li><b data-i18n="types.thai1.b">วิเชียรมาศ (Siamese)</b><span data-i18n="types.thai1.s">ขนสีครีม มีแต้มสีน้ำตาลเข้มที่หน้า หู ขา และหาง ตาสีฟ้า ต้นตระกูลของสยามในปัจจุบัน ช่างพูดและผูกพันกับเจ้าของ</span></li>
+          <li><b data-i18n="types.thai2.b">โคราช (สีสวาด/มาเล็ด)</b><span data-i18n="types.thai2.s">ขนสีเงินอมฟ้าปลายขนเป็นประกาย ตาสีเขียวเหมือนต้นข้าวอ่อน หน้ารูปหัวใจ ถือเป็นแมวนำโชค มักให้เป็นของขวัญแต่งงาน</span></li>
+          <li><b data-i18n="types.thai3.b">ศุภลักษณ์ (ทองแดง)</b><span data-i18n="types.thai3.s">ขนสีทองแดงล้วน ตาสีเหลืองทอง คล้ายแมวพม่า</span></li>
+          <li><b data-i18n="types.thai4.b">ขาวมณี</b><span data-i18n="types.thai4.s">ขนขาวล้วน ตาสีฟ้า เหลือง หรือสองสี (ตาสองสีถือว่ายิ่งดี) ควรตรวจการได้ยิน เพราะแมวขาวตาสีฟ้ามีแนวโน้มหูหนวก</span></li>
+          <li><b data-i18n="types.thai5.b">โกนจา</b><span data-i18n="types.thai5.s">ดำสนิททั้งตัว ตาสีเหลืองอำพัน เชื่อว่าช่วยปัดเป่าสิ่งไม่ดี</span></li>
+        </ul>
+
+        <h3 class="sub" data-i18n="types.sub4">แบ่งตามความยาวขน</h3>
+        <ul class="facts-grid">
+          <li><b data-i18n="types.coat1.b">ขนสั้น</b><span data-i18n="types.coat1.s">ดูแลง่าย แปรงขนสัปดาห์ละ 1–2 ครั้ง</span></li>
+          <li><b data-i18n="types.coat2.b">ขนยาว</b><span data-i18n="types.coat2.s">ต้องแปรงขนเกือบทุกวัน เพื่อป้องกันขนพันกันและก้อนขน</span></li>
+          <li><b data-i18n="types.coat3.b">ไม่มีขน</b><span data-i18n="types.coat3.s">ไม่ใช่แมวที่ไม่ก่อภูมิแพ้ ต้องดูแลผิวแทนการดูแลขน</span></li>
         </ul>
 
         <div class="mh-panel summary">
-          <p><b>สรุป:</b> ห่างกันหลายพันปี ห่างกันหลายพันกิโลเมตร แต่มนุษย์ยกแมวเป็น “ผู้คุ้มครองบ้าน” เหมือนกัน 🐈‍⬛✨</p>
-          <small>ที่มา: Bastet – Wikipedia</small>
+          <p data-i18n-html="types.note"><b>ข้อแนะนำ:</b> หากจะเลี้ยงแมวหน้าแบน หูพับ หรือสายพันธุ์ตัวใหญ่ ควรเลือกผู้เพาะพันธุ์ที่ตรวจสุขภาพพ่อแม่แมว หรือพิจารณารับแมวจรไปอุปการะ ซึ่งมักแข็งแรงกว่า</p>
         </div>
       </div>
     </section>
@@ -103,12 +121,12 @@
     <!-- HOW -->
     <section class="sec" id="how">
       <div class="wrap">
-        <h2>เล่นยังไง</h2>
-        <p>ใช้เวลาประมาณ 1 นาที เล่นได้ทั้งมือถือและคอมพิวเตอร์</p>
+        <h2 data-i18n="how.title">เล่นยังไง</h2>
+        <p data-i18n="how.lede">ใช้เวลาประมาณ 1 นาที เล่นได้ทั้งมือถือและคอมพิวเตอร์</p>
         <ol class="steps">
-          <li><b>เลือกตัวที่ชอบ</b><span>แมวขึ้นมาทีละคู่ คลิกการ์ด หรือกด A / B หรือ ← → บนคีย์บอร์ด</span></li>
-          <li><b>ครบ 20 คู่</b><span>ทุกตัวโผล่มาแค่ครั้งเดียว และจะเจอกับแมวต่างกลุ่มเสมอ</span></li>
-          <li><b>ดูผลลัพธ์</b><span>รู้ทันทีว่าคุณชอบแมวกลุ่มไหนที่สุด พร้อมคะแนนและตัวที่คุณเลือก</span></li>
+          <li><b data-i18n="how.s1.b">เลือกตัวที่ชอบ</b><span data-i18n="how.s1.s">แมวขึ้นมาทีละคู่ คลิกการ์ด หรือกด A / B หรือ ← → บนคีย์บอร์ด</span></li>
+          <li><b data-i18n="how.s2.b">ครบ 20 คู่</b><span data-i18n="how.s2.s">ทุกตัวโผล่มาแค่ครั้งเดียว และจะเจอกับแมวต่างกลุ่มเสมอ</span></li>
+          <li><b data-i18n="how.s3.b">ดูผลลัพธ์</b><span data-i18n="how.s3.s">รู้ทันทีว่าคุณชอบแมวกลุ่มไหนที่สุด พร้อมคะแนนและตัวที่คุณเลือก</span></li>
         </ol>
       </div>
     </section>
@@ -116,15 +134,15 @@
     <!-- GROUPS (rendered from groups.js) -->
     <section class="sec" id="groups">
       <div class="wrap">
-        <h2>แมว 4 กลุ่ม</h2>
-        <p>คุณจะเป็นสายไหน? ลองเล่นเพื่อหาคำตอบ</p>
+        <h2 data-i18n="groups.title">แมว 4 กลุ่ม</h2>
+        <p data-i18n="groups.lede">คุณจะเป็นสายไหน? ลองเล่นเพื่อหาคำตอบ</p>
         <div class="group-grid" id="groupGrid"></div>
       </div>
     </section>
 
     <div class="wrap breeds" id="breeds">
-      <h2>แมว 4 กลุ่ม 40 สายพันธุ์</h2>
-      <p>ทุกตัวจะโผล่มาในเกมครั้งเดียว และจะเจอกับแมวต่างกลุ่มเสมอ</p>
+      <h2 data-i18n="breeds.title">แมว 4 กลุ่ม 40 สายพันธุ์</h2>
+      <p data-i18n="breeds.lede">ทุกตัวจะโผล่มาในเกมครั้งเดียว และจะเจอกับแมวต่างกลุ่มเสมอ</p>
       <div class="breed-grid" id="breedGrid"></div>
     </div>
 
@@ -132,9 +150,9 @@
     <section class="sec cta">
       <div class="wrap">
         <div class="mh-panel">
-          <h2>พร้อมหาแมวที่ใช่หรือยัง?</h2>
-          <p>เลือกไปตามใจชอบ ไม่มีถูกไม่มีผิด แล้วให้เทพี Bastet เป็นคนชี้ทาง</p>
-          <a class="mh-btn mh-btn--primary mh-btn--lg" href="#test" data-go="test">เริ่มเลย →</a>
+          <h2 data-i18n="cta.title">พร้อมหาแมวที่ใช่หรือยัง?</h2>
+          <p data-i18n="cta.lede">เลือกไปตามใจชอบ ไม่มีถูกไม่มีผิด แล้วให้เทพี Bastet เป็นคนชี้ทาง</p>
+          <a class="mh-btn mh-btn--primary mh-btn--lg" href="#test" data-go="test" data-i18n="cta.start">เริ่มเลย →</a>
         </div>
       </div>
     </section>
@@ -144,15 +162,15 @@
   <section id="test" class="screen" hidden>
     <div class="wrap test">
       <div class="mh-progress">
-        <div class="mh-progress__meta"><span id="pairLabel">คู่ที่ 1 / 20</span><span>กด A / B หรือ ← →</span></div>
+        <div class="mh-progress__meta"><span id="pairLabel">คู่ที่ 1 / 20</span><span data-i18n="test.hint">กด A / B หรือ ← →</span></div>
         <div class="mh-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="progTrack">
           <div class="mh-progress__fill" id="progFill"></div>
         </div>
       </div>
-      <h2>ชอบตัวไหนมากกว่า?</h2>
+      <h2 data-i18n="test.title">ชอบตัวไหนมากกว่า?</h2>
       <div class="mh-vs">
         <button class="mh-card" id="cardA" type="button"></button>
-        <span class="mh-vs__or">หรือ</span>
+        <span class="mh-vs__or" data-i18n="test.or">หรือ</span>
         <button class="mh-card" id="cardB" type="button"></button>
       </div>
     </div>
@@ -162,17 +180,17 @@
   <section id="result" class="screen" hidden>
     <div class="wrap result">
       <div>
-        <span class="mh-chip">ผลของคุณ</span>
+        <span class="mh-chip" data-i18n="result.chip">ผลของคุณ</span>
         <h1 id="winTitle"></h1>
         <p class="desc" id="winDesc"></p>
         <div class="actions">
-          <button class="mh-btn mh-btn--primary" id="againBtn" type="button">เล่นอีกครั้ง</button>
-          <button class="mh-btn" data-go="intro" type="button">กลับหน้าแรก</button>
+          <button class="mh-btn mh-btn--primary" id="againBtn" type="button" data-i18n="result.again">เล่นอีกครั้ง</button>
+          <button class="mh-btn" data-go="intro" type="button" data-i18n="result.home">กลับหน้าแรก</button>
         </div>
       </div>
       <div class="mh-panel">
-        <h2>คะแนนแต่ละกลุ่ม</h2>
-        <p>จาก 20 ครั้งที่คุณเลือก</p>
+        <h2 data-i18n="result.scoresTitle">คะแนนแต่ละกลุ่ม</h2>
+        <p data-i18n="result.scoresLede">จาก 20 ครั้งที่คุณเลือก</p>
         <ol class="scores" id="scores"></ol>
       </div>
       <div class="picked">
@@ -184,7 +202,7 @@
 </main>
 
 <!-- BASTET FOOTER -->
-<footer class="bastet-footer">
+<footer class="bastet-footer" id="bastet">
   <div class="wrap">
     <div class="bastet-grid">
       <div class="bastet-box">
@@ -196,44 +214,45 @@
                class="bastet-img">
           <div>
             <h3><span>𓃠</span> THE CULT OF BASTET (GIZA)</h3>
-            <p>สืบทอดจิตวิญญาณจากลัทธิบูชาเทพีบาสเตตแห่งอียิปต์โบราณตั้งแต่ 3100 ปีก่อนคริสตกาล หน้าที่แท้จริงของมนุษย์คือการเป็นทาสรับใช้ เปิดกระป๋อง และกราบไหว้เจ้านาย</p>
+            <p data-i18n="footer.bastetDesc">สืบทอดจิตวิญญาณจากลัทธิบูชาเทพีบาสเตตแห่งอียิปต์โบราณตั้งแต่ 3100 ปีก่อนคริสตกาล หน้าที่แท้จริงของมนุษย์คือการเป็นทาสรับใช้ เปิดกระป๋อง และกราบไหว้เจ้านาย</p>
           </div>
         </div>
         <ul class="bastet-links">
-          <li><a href="javascript:void(0)">𓏬 วิธีได้ยันต์ 5 แถว</a></li>
-          <li><a href="javascript:void(0)">𓏬 บัญชาปลาทู</a></li>
-          <li><a href="javascript:void(0)">𓏬 สมาคมทาส</a></li>
-          <li><a href="javascript:void(0)">𓏬 หมดตัวเพราะกลัวเจ้านาย</a></li>
-          <li><a href="javascript:void(0)" title="The sacred duty">𓏬 คัมภีร์ตักทราย (The Holy Litter Box)</a></li>
-          <li><a href="javascript:void(0)" title="If it fits, I sits">𓏬 ทฤษฎีกล่องลัง (If It Fits, I Sits)</a></li>
-          <li><a href="javascript:void(0)" title="Gravity test">𓏬 กฏแรงโน้มถ่วง (Pushing Things Off Tables)</a></li>
-          <li><a href="javascript:void(0)" title="3 AM Zoomies">𓏬 วิ่งมาราธอนตี 3 (3 AM Zoomies Support)</a></li>
-          <li><a href="javascript:void(0)" title="I am your master">𓏬 ใบรับรองการเป็นทาส (Certified Cat Servant)</a></li>
+          <li><a href="javascript:void(0)" data-i18n="footer.link1">𓏬 วิธีได้ยันต์ 5 แถว</a></li>
+          <li><a href="javascript:void(0)" data-i18n="footer.link2">𓏬 บัญชาปลาทู</a></li>
+          <li><a href="javascript:void(0)" data-i18n="footer.link3">𓏬 สมาคมทาส</a></li>
+          <li><a href="javascript:void(0)" data-i18n="footer.link4">𓏬 หมดตัวเพราะกลัวเจ้านาย</a></li>
+          <li><a href="javascript:void(0)" title="The sacred duty" data-i18n="footer.link5">𓏬 คัมภีร์ตักทราย (The Holy Litter Box)</a></li>
+          <li><a href="javascript:void(0)" title="If it fits, I sits" data-i18n="footer.link6">𓏬 ทฤษฎีกล่องลัง (If It Fits, I Sits)</a></li>
+          <li><a href="javascript:void(0)" title="Gravity test" data-i18n="footer.link7">𓏬 กฏแรงโน้มถ่วง (Pushing Things Off Tables)</a></li>
+          <li><a href="javascript:void(0)" title="3 AM Zoomies" data-i18n="footer.link8">𓏬 วิ่งมาราธอนตี 3 (3 AM Zoomies Support)</a></li>
+          <li><a href="javascript:void(0)" title="I am your master" data-i18n="footer.link9">𓏬 ใบรับรองการเป็นทาส (Certified Cat Servant)</a></li>
         </ul>
       </div>
-      
+
       <div class="bastet-box">
         <div>
           <h3><span>🔺</span> SACRED TEMPLE LOCATION</h3>
-          <p style="margin-bottom:8px;">ศูนย์บัญชาการหลักใต้เงื้อมเงาของมหาพีระมิดแห่งกิซ่า ต้นกำเนิดจักรวาลแมว</p>
+          <p style="margin-bottom:8px;" data-i18n="footer.templeDesc">ศูนย์บัญชาการหลักใต้เงื้อมเงาของมหาพีระมิดแห่งกิซ่า ต้นกำเนิดจักรวาลแมว</p>
           <div class="bastet-map">
             <span>📍</span>
             <strong style="color:var(--ink); font-size:12px;">The Great Pyramid of Giza, Egypt</strong>
             <small style="color:var(--ink-muted);">GPS: 29.9792° N, 31.1342° E</small>
           </div>
         </div>
-        <a href="https://maps.google.com/?q=Giza+Pyramids" target="_blank" rel="noopener noreferrer" class="mh-btn" style="width:100%; justify-content:center; font-size:12px; height:34px;">เปิดแผนที่นำทางสู่พีระมิด 🗺️</a>
+        <a href="https://maps.google.com/?q=Giza+Pyramids" target="_blank" rel="noopener noreferrer" class="mh-btn" style="width:100%; justify-content:center; font-size:12px; height:34px;" data-i18n="footer.mapBtn">เปิดแผนที่นำทางสู่พีระมิด 🗺️</a>
       </div>
     </div>
 
     <div class="bastet-bottom">
       <p>© 3100 BC - 2026 Meow Haven & The Order of Bastet. Managed by Cat Servants.</p>
-      <p style="font-style:italic;">"ขอให้กระบะทรายสะอาดสะอ้านและขนมเลียไม่ขาดแคลน 🐾"</p>
+      <p style="font-style:italic;" data-i18n="footer.quote">"ขอให้กระบะทรายสะอาดสะอ้านและขนมเลียไม่ขาดแคลน 🐾"</p>
     </div>
   </div>
 </footer>
 
-<script src="groups.js"></script>
-<script src="script.js"></script>
+<script src="i18n.js?v=1"></script>
+<script src="groups.js?v=1"></script>
+<script src="script.js?v=1"></script>
 </body>
 </html>
